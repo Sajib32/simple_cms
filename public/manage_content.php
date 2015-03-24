@@ -1,23 +1,33 @@
 <?php require_once("../includes/db_connection.php") ?>
 <?php require_once("../includes/functions.php") ?>
-<?php 
-	// Perform database query
-	$query = "SELECT * FROM subjects";
-	$result = mysqli_query($connection, $query);
-	confirm_query($result);
-?>
 <?php include("../includes/layouts/header.php"); ?>
 <div id="main">
 	<div id="navigation">
 		<ul class="subjects">
 			<?php 
-				// Use returned data
-				while($subject=mysqli_fetch_assoc($result)) {
-					//Output data from each row
+				$subject_set = find_all_subjects();
 			?>
-			<li><?php echo $subject["menu_name"] . " (" . $subject["id"] . ")"; ?></li>
+			<?php 
+				while($subject=mysqli_fetch_assoc($subject_set)) {
+			?>
+			<li><?php echo $subject["menu_name"] . " (" . $subject["id"] . ")"; ?>
+			<?php $page_set = find_pages_for_subject($subject["id"]);	?>
+			<ul class="pages">
+				<?php 
+					while($page = mysqli_fetch_assoc($page_set)) {
+				?>
+				<li><?php echo $page["menu_name"]; ?></li>
+				<?php 
+					}
+				?>
+				<?php mysqli_free_result($page_set); ?>
+			</ul>
+			</li>
 			<?php 
 				}
+			?>
+			<?php 
+				mysqli_free_result($subject_set);
 			?>
 		</ul>
 	</div>
@@ -26,8 +36,4 @@
 		
 	</div>
 </div>
-<?php 
-	// Release returned data
-	mysqli_free_result($result);
-?>
 <?php include("../includes/layouts/footer.php"); ?>	
