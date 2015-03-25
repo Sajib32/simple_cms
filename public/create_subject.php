@@ -1,3 +1,4 @@
+<?php require_once("../includes/session.php"); ?>
 <?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
 
@@ -21,12 +22,12 @@ if (isset($_POST['submit'])){
 
 	if ($result) {
 		// Success
-		$message = "Subject created."; 
+		$_SESSION["message"] = "Subject created."; 
 		redirect_to("manage_content.php");
 	} else {
 		// Failure
 		// $message = "Subject created failed";
-		$message = "Subject created failed.";
+		$_SESSION["message"] = "Subject created failed.";
 		redirect_to("new_subject.php");
 	}
 
