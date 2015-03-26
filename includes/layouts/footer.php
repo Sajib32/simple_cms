@@ -1,4 +1,4 @@
-<div id="footer">Copyright 20xx, Inspire Corp</div>
+<div id="footer">Copyright <?php echo date("Y"); ?> , Inspire Corp</div>
 	</body>
 </html>
 <?php
